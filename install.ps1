@@ -124,6 +124,32 @@ if (-not (Test-Path $exe)) {
     throw "muxit.exe not found at $exe after extraction"
 }
 
+# 6a. Visual C++ runtime — needed by the tray icon's native library
+# (notification_icon.dll imports VCRUNTIME140.dll). A clean Windows image does
+# not have it; Windows Sandbox is the usual place people hit this. Non-fatal:
+# without it everything works except the tray icon.
+$vcRuntime = Join-Path $env:SystemRoot 'System32\vcruntime140.dll'
+if (-not (Test-Path $vcRuntime)) {
+    Write-Section "Installing Visual C++ runtime (needed for the tray icon)"
+    $vcRedist = Join-Path $tempDir 'vc_redist.x64.exe'
+    try {
+        Invoke-WebRequest -Uri 'https://aka.ms/vs/17/release/vc_redist.x64.exe' `
+            -OutFile $vcRedist -UseBasicParsing
+        $proc = Start-Process -FilePath $vcRedist `
+            -ArgumentList '/install', '/quiet', '/norestart' -Wait -PassThru
+        # 3010 = success, reboot required.
+        if ($proc.ExitCode -eq 0 -or $proc.ExitCode -eq 3010) {
+            Write-Host "  Installed."
+        } else {
+            throw "vc_redist.x64.exe exited with $($proc.ExitCode)"
+        }
+    } catch {
+        Write-Warning "Could not install the Visual C++ runtime: $($_.Exception.Message)"
+        Write-Host "  Muxit will run fine, but the system tray icon will be unavailable."
+        Write-Host "  To fix it later, install https://aka.ms/vs/17/release/vc_redist.x64.exe (needs admin)."
+    }
+}
+
 if (-not $NoShortcut) {
     Write-Section "Creating Start Menu shortcut"
     $startMenu = Join-Path $env:APPDATA 'Microsoft\Windows\Start Menu\Programs'
@@ -134,6 +160,12 @@ if (-not $NoShortcut) {
         $lnk.TargetPath = $exe
         $lnk.WorkingDirectory = $InstallPath
         $lnk.Description = 'Muxit — hardware orchestration platform'
+        # muxit.exe embeds the Muxit icon (see <ApplicationIcon> in
+        # MuxitServer.csproj), which a shortcut would normally inherit. Point at
+        # it explicitly anyway: on an upgrade over an older install the shell
+        # keeps serving the .lnk's cached icon, and re-stating the source is
+        # what makes it re-read the new exe.
+        $lnk.IconLocation = "$exe,0"
         $lnk.Save()
         Write-Host "  $lnkPath"
     } catch {

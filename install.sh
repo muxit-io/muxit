@@ -19,7 +19,7 @@
 #   1. Detects OS / arch. Linux: apt-only Ubuntu/Debian, x86_64 + aarch64.
 #      macOS: Apple Silicon (arm64) + Intel (x86_64).
 #   2. Installs system packages — Linux (sudo apt): ffmpeg,
-#      libayatana-appindicator3-1, xdg-utils; macOS (Homebrew): ffmpeg.
+#      libappindicator3-1, xdg-utils; macOS (Homebrew): ffmpeg.
 #      Asks for confirmation unless --yes.
 #   3. Linux only: adds $USER to the `dialout` group (serial-port access).
 #      macOS needs no group for serial (/dev/tty.* / /dev/cu.*).
@@ -133,7 +133,7 @@ if [[ $DO_APT -eq 1 ]]; then
   if [[ "$os" == "Linux" ]]; then
     if ! command -v apt-get >/dev/null 2>&1; then
       warn "apt-get not found — this script's auto-install supports Ubuntu/Debian only."
-      warn "Skipping system-package install. Install manually: ffmpeg libayatana-appindicator3-1 xdg-utils"
+      warn "Skipping system-package install. Install manually: ffmpeg libappindicator3-1 xdg-utils"
       DO_APT=0
     fi
   elif [[ "$os" == "Darwin" ]]; then
@@ -151,9 +151,15 @@ if [[ $DO_APT -eq 1 && "$os" == "Linux" ]]; then
   pkgs_needed=()
   # ffmpeg → required for Onvif RTSP capture (subprocess pipeline).
   command -v ffmpeg >/dev/null 2>&1 || pkgs_needed+=("ffmpeg")
-  # libayatana-appindicator3-1 → system-tray icon (cosmetic; server runs without).
-  if ! ldconfig -p 2>/dev/null | grep -q "libayatana-appindicator3.so"; then
-    pkgs_needed+=("libayatana-appindicator3-1")
+  # libappindicator3-1 → system-tray icon (cosmetic; server runs without).
+  # The tray's native library links against the ORIGINAL appindicator soname:
+  #   $ objdump -p libnotification_icon.so | grep NEEDED
+  #   NEEDED  libappindicator3.so.1
+  # Installing libayatana-appindicator3-1 does not provide that soname, so it
+  # left the tray broken while reporting success. Distros that dropped
+  # libappindicator3-1 (Ubuntu 24.04+) need the ayatana package plus a symlink.
+  if ! ldconfig -p 2>/dev/null | grep -q "libappindicator3.so.1"; then
+    pkgs_needed+=("libappindicator3-1")
   fi
   # xdg-utils → auto-open browser at startup (cosmetic; URL is logged either way).
   command -v xdg-open >/dev/null 2>&1 || pkgs_needed+=("xdg-utils")
