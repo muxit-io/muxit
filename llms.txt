@@ -1,0 +1,93 @@
+# Muxit
+
+> Muxit is a hardware orchestration platform for lab tinkerers. It controls instruments, robots and sensors through connectors (one sandboxed JavaScript file per device), automation scripts and live dashboards.
+
+Writing Muxit code — a connector, a script or a driver? Read the "For AI Assistants" pages first: they are self-contained, state the rules the runtime enforces, and end with a checklist. [llms-full.txt](https://docs.muxit.io/llms-full.txt) holds all of them in one file.
+
+Every link below is the raw markdown of a page; the HTML page is the same path without `.md`.
+
+## For AI Assistants
+
+- [Overview](https://docs.muxit.io/for-ai/index.md): Self-contained references that let an AI assistant outside Muxit — ChatGPT, Claude, Copilot, Cursor — write working connectors, scripts and drivers.
+- [Writing Connectors](https://docs.muxit.io/for-ai/connectors.md): Everything an AI assistant needs to write a working Muxit connector file — file shape, the Scpi, LineText and BinaryStream protocols, drivers, custom properties and methods, safety, and the mistakes to avoid.
+- [Writing Scripts](https://docs.muxit.io/for-ai/scripts.md): Everything an AI assistant needs to write a working Muxit automation script — the synchronous sandbox, device access, timing, files, operator prompts, safety, patterns and the mistakes to avoid.
+- [Writing Drivers](https://docs.muxit.io/for-ai/drivers.md): Everything an AI assistant needs to write a working Muxit driver in JavaScript, Python or C# — the shared contract, each language's file shape, installing it, packaging it, and the mistakes to avoid.
+
+## Getting Started
+
+- [System Requirements](https://docs.muxit.io/getting-started/system-requirements.md): What you need to run Muxit — supported platforms, hardware, and network requirements.
+- [Introduction](https://docs.muxit.io/getting-started/index.md): Get up and running with Muxit — what it is, what's included, and your first steps.
+- [Installation](https://docs.muxit.io/getting-started/installation.md): Install Muxit on Windows, macOS, or Linux — one command, no prerequisites.
+- [UI Tour](https://docs.muxit.io/getting-started/ui-tour.md): A visual tour of the Muxit web interface — panels, sidebars, editors, and where to find everything.
+
+## Guides
+
+- [Connectors](https://docs.muxit.io/guides/connectors.md): Writing connector configs — the bridge between hardware drivers and the rest of Muxit.
+- [Python Connectors](https://docs.muxit.io/guides/python-connectors.md): Wrap a Python script as a Muxit connector — vendor SDKs, ML models, anything from the Python ecosystem.
+- [Protocol Authoring](https://docs.muxit.io/guides/protocol-authoring.md)
+- [Scripts](https://docs.muxit.io/guides/scripts.md): Sandboxed JavaScript automation scripts — available globals, lifecycle, and examples.
+- [Dashboards](https://docs.muxit.io/guides/dashboards.md): Building real-time dashboards with drag-and-drop widgets bound to device properties.
+- [Operator Mode](https://docs.muxit.io/guides/operator-mode.md)
+- [Accounts](https://docs.muxit.io/guides/accounts.md): Admin, engineer and operator sign-in with PINs — who did what, and who may do what.
+- [Workspaces](https://docs.muxit.io/guides/workspaces.md)
+- [MQTT & IoT](https://docs.muxit.io/guides/mqtt-iot.md): Connect IoT devices to Muxit via MQTT — ESP32, Arduino, Home Assistant, Node-RED, and Tasmota.
+- [Notifications & Alerts](https://docs.muxit.io/guides/notifications.md): Send messages to users when scripts finish, when sensors breach thresholds, or when something needs attention — via e-mail, ntfy, Discord, Slack, or a generic webhook.
+- [Label Printing](https://docs.muxit.io/guides/label-printing.md): Print labels on a production line with Muxit — set up Brother P-touch, Epson TM-C3500 or any installed printer, design templates, trigger prints from scanners or MES systems, and monitor the printer.
+- [AI & Voice](https://docs.muxit.io/guides/ai.md): Control lab hardware using natural language — chat, voice, MCP, and autonomous agents.
+- [AI: SCPI Authoring](https://docs.muxit.io/guides/ai-scpi-authoring.md)
+- [Remote Access](https://docs.muxit.io/guides/remote-access.md): Access Muxit from other computers on your network — or anywhere via VPN.
+- [Keyboard Shortcuts](https://docs.muxit.io/guides/keyboard-shortcuts.md): Editor and layout keyboard shortcuts for the Muxit web UI.
+- [JavaScript Library](https://docs.muxit.io/guides/js-library.md): Connect your own JavaScript applications to Muxit via WebSocket.
+- [Driver Marketplace](https://docs.muxit.io/guides/driver-marketplace.md)
+- [Troubleshooting](https://docs.muxit.io/guides/troubleshooting.md): Common issues and solutions for Muxit — server, devices, scripts, dashboards, and AI.
+
+## Reference
+
+- [Script API](https://docs.muxit.io/reference/script-api.md): Quick reference for all globals available in Muxit scripts.
+- [Concepts](https://docs.muxit.io/reference/concepts.md): What the three catalog kinds mean and which one to pick when adding a device to Muxit.
+- [Subscription & Plans](https://docs.muxit.io/reference/subscription-plans.md)
+- [AI Tools](https://docs.muxit.io/reference/ai-tools.md): Reference for the AI tools that help you add new devices — port discovery, stimulus probing, binary frame analysis, and connector composition.
+- [Overview](https://docs.muxit.io/reference/drivers/index.md): Reference for all built-in drivers that ship with Muxit — TestDevice, Webcam, ONVIF, FileAccess, Virtual, and MqttBridge.
+- [Transport](https://docs.muxit.io/reference/drivers/transport.md): Reference for the `connection:` block — selects which Transport (serial, tcp, usbtmc) a Protocol or Driver uses, and how to reach the device.
+- [Scpi (Protocol)](https://docs.muxit.io/reference/drivers/scpi.md): Reference for the built-in Scpi protocol — query/send any SCPI-compliant instrument over USBTMC, Serial, or TCP/IP, with framing, pacing, and the declarative `schema` block.
+- [LineText (Protocol)](https://docs.muxit.io/reference/drivers/linetext.md): Reference for the built-in LineText protocol — parse text-line streams (Arduino sketches, hobby PSUs, custom embedded devices) into typed properties.
+- [BinaryStream (Protocol)](https://docs.muxit.io/reference/drivers/binary-stream.md): Reference for the built-in BinaryStream protocol — parse fixed-format binary frames (Modbus-RTU, custom embedded, datalogger output) into typed fields.
+- [TestDevice](https://docs.muxit.io/reference/drivers/test-device.md): Reference for the TestDevice built-in driver — a simulated instrument for learning and testing.
+- [Webcam](https://docs.muxit.io/reference/drivers/webcam.md): Reference for the Webcam built-in driver — USB webcam/video capture using OpenCV.
+- [ONVIF Camera](https://docs.muxit.io/reference/drivers/onvif.md): Reference for the ONVIF built-in driver — IP camera streaming, snapshots, and PTZ control.
+- [FileAccess](https://docs.muxit.io/reference/drivers/file-access.md): Reference for the FileAccess built-in driver — sandboxed file I/O for scripts and AI.
+- [Virtual](https://docs.muxit.io/reference/drivers/virtual.md): Reference for the Virtual built-in driver — an in-memory connector with no hardware, for sharing values between scripts and dashboards.
+- [MqttBridge](https://docs.muxit.io/reference/drivers/mqtt-bridge.md): Reference for the MqttBridge built-in driver — MQTT broker bridge for IoT devices.
+- [EmailNotifier](https://docs.muxit.io/reference/drivers/email-notifier.md): Reference for the EmailNotifier built-in driver — outbound SMTP e-mail with plain text, HTML, and attachments.
+- [WebhookNotifier](https://docs.muxit.io/reference/drivers/webhook-notifier.md): Reference for the WebhookNotifier built-in driver — POSTs notifications to ntfy.sh, Discord, Slack, or any HTTP endpoint.
+- [LabelPrinter](https://docs.muxit.io/reference/drivers/label-printer.md): Reference for the LabelPrinter built-in driver — renders JSON label templates with text, barcodes, and images, and prints them through any installed printer.
+- [AudioSynth](https://docs.muxit.io/reference/drivers/audio-synth.md): Reference for the AudioSynth extension driver — a software synthesizer with ADSR envelopes and additive harmonics that plays tones, notes, and melodies. Streams audio to every connected dashboard by default; can also play locally on the host via NAudio.
+- [Midi](https://docs.muxit.io/reference/drivers/midi.md): Reference for the Midi extension driver — live MIDI I/O, SMF playback and recording, internal clock, panic, learn, and channel filtering.
+- [Digilent Analog Discovery](https://docs.muxit.io/reference/drivers/digilent-analog-discovery.md): Reference for the Digilent Analog Discovery 2 / 3 driver — oscilloscope, AWG, programmable supplies, and digital I/O over USB.
+- [Saleae Logic](https://docs.muxit.io/reference/drivers/saleae-logic.md): Reference for the Saleae Logic driver — timed, manual and triggered captures, protocol analyzers, and CSV/binary/.sal exports through the Logic 2 automation API.
+- [Label Templates](https://docs.muxit.io/reference/label-templates.md): Schema reference for workspace/labels/*.label.json — page size, elements (text, barcode, image, rect, line), placeholders and formatters used by the LabelPrinter driver.
+- [Configuration](https://docs.muxit.io/reference/configuration.md): Complete reference for Muxit's server.json configuration file.
+- [WebSocket API](https://docs.muxit.io/reference/websocket-api.md): Complete WebSocket protocol specification for MuxitServer.
+- [HTTP API](https://docs.muxit.io/reference/http-api.md): Every HTTP route MuxitServer exposes, with the auth rule for each.
+- [Driver SDK](https://docs.muxit.io/reference/driver-sdk.md): Build device drivers for Muxit — JavaScript modules or C# class libraries.
+- [JS Driver SDK](https://docs.muxit.io/reference/driver-sdk-js.md): Build JavaScript device drivers for Muxit — sandboxed V8 modules with transport APIs.
+- [Python Driver SDK](https://docs.muxit.io/reference/driver-sdk-python.md): Build Python device drivers for Muxit — subprocess-isolated, JSON-RPC bridge.
+- [C# Driver SDK](https://docs.muxit.io/reference/driver-sdk-csharp.md): Build C# device drivers for Muxit — .NET class libraries implementing IConnectorDriver.
+- [Driver Manifest](https://docs.muxit.io/reference/driver-manifest.md): Canonical manifest.json schema shared by JS and C# drivers.
+- [Driver Tags](https://docs.muxit.io/reference/driver-tags.md): Controlled tag vocabulary for driver manifests.
+- [Driver Validation](https://docs.muxit.io/reference/driver-validation.md): Rules enforced by the driver validator — CLI and server.
+- [Glossary](https://docs.muxit.io/reference/glossary.md): Definitions of Muxit-specific terms and concepts.
+- [Revision History](https://docs.muxit.io/reference/revision-history.md)
+
+## Examples
+
+- [Your First Script](https://docs.muxit.io/examples/first-script.md): Step-by-step walkthrough of writing your first Muxit automation script.
+- [Your First Connector](https://docs.muxit.io/examples/first-connector.md): Step-by-step walkthrough of creating a connector config for a hardware device.
+- [Your First Dashboard](https://docs.muxit.io/examples/first-dashboard.md): Step-by-step walkthrough of building a real-time dashboard with live widgets.
+
+## Optional
+
+- [Install on Linux](https://docs.muxit.io/guides/install-linux.md): Three ways to install Muxit on Ubuntu / Debian and what apt-packages it needs.
+- [Safety](https://docs.muxit.io/guides/safety.md)
+- [Avantes Spectrometer Driver](https://docs.muxit.io/reference/drivers/avantes.md): Reference for the Avantes spectrometer driver — USB/Ethernet AvaSpec control with full colorimetry, horticulture photon-flux bins, CRI (Ra + R1-R14), peak and dominant wavelength, and auto integration time.
+- [Vision Driver](https://docs.muxit.io/reference/drivers/vision.md): Reference for the Vision built-in driver — real-time computer vision with OpenCV for object detection and tracking.
