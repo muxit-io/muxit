@@ -35,6 +35,9 @@ jobs:
         env:
           VITEPRESS_BASE: /
           VITEPRESS_OUTDIR: .vitepress/dist
+          # Makes the llms.txt / llms-full.txt links absolute (https://docs.muxit.io/...),
+          # so an external assistant handed llms.txt can follow them.
+          DOCS_PUBLIC: "1"
         run: npx vitepress build
 
       - name: Add CNAME for custom domain
